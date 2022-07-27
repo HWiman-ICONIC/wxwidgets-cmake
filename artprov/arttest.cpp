@@ -31,6 +31,8 @@ class MyApp : public wxApp
 {
 public:
     virtual bool OnInit() wxOVERRIDE;
+
+    virtual int OnExit() wxOVERRIDE;
 };
 
 class MyFrame : public wxFrame
@@ -95,11 +97,19 @@ bool MyApp::OnInit()
     if ( !wxApp::OnInit() )
         return false;
 
+    wxInitAllImageHandlers();
+
     // create the main application window
     MyFrame *frame = new MyFrame("wxArtProvider sample",
                                  wxPoint(50, 50), wxSize(450, 340));
     frame->Show(true);
     return true;
+}
+
+int MyApp::OnExit()
+{
+    wxImage::CleanUpHandlers();
+    return wxApp::OnExit();
 }
 
 // ----------------------------------------------------------------------------
@@ -117,6 +127,7 @@ protected:
 #include "error.xpm"
 #include "warning.xpm"
 #include "question.xpm"
+//#define wxART_CAMERA_SEARCH             wxString("camera_search")
 
 wxBitmap MyArtProvider::CreateBitmap(const wxArtID& id,
                                      const wxArtClient& client,
@@ -130,8 +141,11 @@ wxBitmap MyArtProvider::CreateBitmap(const wxArtID& id,
             return wxBitmap(error_xpm);
         if ( id == wxART_WARNING )
             return wxBitmap(warning_xpm);
-        if ( id == wxART_QUESTION )
+        if (id == wxART_QUESTION)
+   //         return wxBitmap("camera_search", wxBITMAP_TYPE_PNG_RESOURCE);
             return wxBitmap(question_xpm);
+        //if (id == wxART_CAMERA_SEARCH) 
+        //    return wxBitmap(camera_search)
     }
     return wxNullBitmap;
 }
