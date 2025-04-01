@@ -14,15 +14,14 @@
 #
 
 # Declare the minimum required CMake version
-cmake_minimum_required(VERSION 2.8.12)
+cmake_minimum_required(VERSION 3.5)
 
 # Name the project
 project(samples)
 
 # Request the required wxWidgets libs
-find_package(wxWidgets 3.1 COMPONENTS core base ribbon webview net html aui stc REQUIRED)
-include(${wxWidgets_USE_FILE})
-add_compile_definitions(WXUSINGDLL)
+find_package(OpenGL)
+find_package(wxWidgets CONFIG REQUIRED)
 
 # --------------------------------------------------------------------------
 # On Visual Studio 8 MS deprecated C. This removes all 1.276E1265 security
@@ -57,5 +56,6 @@ add_subdirectory(webview)
 add_subdirectory(wizard)
 add_subdirectory(aui)
 add_subdirectory(artprov)
+add_subdirectory(fswatcher)
 
 
